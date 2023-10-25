@@ -20,6 +20,13 @@ namespace Artemis {
 			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
 			return new InputData(thrust, targetOrient, needShoot, false, false);
 		}
+
+		public InputData GoToTarget(SpaceShipView spaceShip, GameData gameData, Transform targetPos)
+		{
+			float thrust = 1.0f;
+			float targetOrient = spaceShip.Orientation + AimingHelpers.ComputeSteeringOrient(spaceShip, new Vector2(targetPos.position.x,targetPos.position.y));
+			return new InputData(thrust, targetOrient, false, false, false);
+		}
 	}
 
 }
