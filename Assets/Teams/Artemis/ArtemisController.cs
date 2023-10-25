@@ -49,6 +49,18 @@ namespace Artemis {
 			return new InputData(thrust, targetOrient, false, false, false);
 		}
 
+		public bool AsteroideOnTheWay(SpaceShipView spaceShip, GameData gameData, Transform targetPos)
+		{
+			bool isClear = true;
+			RaycastHit2D hit2D = Physics2D.Raycast(spaceShip.Position, targetPos.position);
+			if (hit2D.collider.CompareTag("Asteroid"))
+			{
+				isClear = false;
+			}
+			return isClear;
+		}
+	}
+
 		public float DistanceWithEnemySpaceship() => Vector2.Distance(_enemySpaceship.Position, _aiSpaceship.Position);
 
 		public WayPointView GetClosestUnownedWaypoint()
