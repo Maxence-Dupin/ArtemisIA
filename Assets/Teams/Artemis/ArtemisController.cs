@@ -27,6 +27,17 @@ namespace Artemis {
 			float targetOrient = spaceShip.Orientation + AimingHelpers.ComputeSteeringOrient(spaceShip, new Vector2(targetPos.position.x,targetPos.position.y));
 			return new InputData(thrust, targetOrient, false, false, false);
 		}
+
+		public bool AsteroideOnTheWay(SpaceShipView spaceShip, GameData gameData, Transform targetPos)
+		{
+			bool isClear = true;
+			RaycastHit2D hit2D = Physics2D.Raycast(spaceShip.Position, targetPos.position);
+			if (hit2D.collider.CompareTag("Asteroid"))
+			{
+				isClear = false;
+			}
+			return isClear;
+		}
 	}
 
 }
