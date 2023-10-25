@@ -59,8 +59,7 @@ namespace Artemis {
 			}
 			return isClear;
 		}
-	}
-
+		
 		public float DistanceWithEnemySpaceship() => Vector2.Distance(_enemySpaceship.Position, _aiSpaceship.Position);
 
 		public WayPointView GetClosestUnownedWaypoint()
