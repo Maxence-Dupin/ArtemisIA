@@ -19,7 +19,11 @@ namespace Artemis {
 		private bool _hasMoreEnergy;
 
 		public bool GoingToWaypoint;
+
 		public bool shootForward;
+
+		public bool UseShockWave;
+
 
 		public override void Initialize(SpaceShipView spaceship, GameData data)
 		{
@@ -31,7 +35,7 @@ namespace Artemis {
 		{
 			_behaviorTree.SetVariableValue("DistanceE", DistanceWithEnemySpaceship());
 
-			_closestWaypointPosition = GetClosestUnownedWaypointTransform();
+			_closestWaypointPosition = GetClosestUnownedWaypointPosition();
 			_behaviorTree.SetVariableValue("ClosestWP", _closestWaypointPosition);
 			_behaviorTree.SetVariableValue("DistanceWP", DistanceWithClosestWaypoint());
 			
@@ -39,6 +43,8 @@ namespace Artemis {
 			
 			_behaviorTree.SetVariableValue("EnergieJ", _aiSpaceShip.Energy);
 			_behaviorTree.SetVariableValue("EnergieE", _enemySpaceShip.Energy);
+			
+			_behaviorTree.SetVariableValue("DistanceTir", DistanceWithClosestEnemyShot());
 
 			if (GoingToWaypoint)
 			{
@@ -54,7 +60,12 @@ namespace Artemis {
 			float targetOrient = spaceship.Orientation;
 			float thrust = 1f;
 			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
-			return new InputData(thrust, targetOrient, needShoot, false, false);
+
+			var inputData = new InputData(thrust, targetOrient, needShoot, false, UseShockWave);
+			
+			UseShockWave = false;
+			
+			return inputData;
 		}
 
 		public InputData GoToTarget(SpaceShipView spaceShip, Vector2 targetPos)
@@ -93,6 +104,7 @@ namespace Artemis {
 			return false;
 		}
 
+
 		public InputData ShootHostile()
 		{
 			return new InputData(_aiSpaceShip.Thrust, _aiSpaceShip.Orientation, true, false, false);
@@ -100,9 +112,15 @@ namespace Artemis {
 
 		public Vector2 GetClosestUnownedWaypointTransform()
 		{
+			return new Vector2();
+		}
+
+		public Vector2 GetClosestUnownedWaypointPosition()
+
+		{
 			var gameData = GameManager.Instance.GetGameData();
 
-			WayPointView waypoint = null;
+			WayPointView waypoint = gameData.WayPoints[0];
 			var smallestDistance = float.MaxValue;
 
 			for (var i = 0; i < gameData.WayPoints.Count; i++)
@@ -116,6 +134,24 @@ namespace Artemis {
 			}
 
 			return waypoint.Position;
+		}
+		
+		public float DistanceWithClosestEnemyShot()
+		{
+			var gameData = GameManager.Instance.GetGameData();
+			
+			var smallestDistance = float.MaxValue;
+
+			for (var i = 0; i < gameData.Bullets.Count; i++)
+			{
+				var distance = Vector2.Distance(gameData.Bullets[i].Position, _aiSpaceShip.Position);
+
+				if (distance > smallestDistance) continue;
+				
+				smallestDistance = distance;
+			}
+
+			return smallestDistance;
 		}
 	}
 }

@@ -9,9 +9,7 @@ namespace Artemis
 {
     public class UseShockWave : Action
     {
-        public ArtemisController _artemisController;
-        public Vector2 _target;
-
+        private ArtemisController _artemisController;
         private SpaceShipView _spaceShipView;
 
         public override void OnStart()
@@ -20,13 +18,15 @@ namespace Artemis
             
             _artemisController = GetComponent<ArtemisController>();
             _spaceShipView = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
-            _artemisController.GoingToWaypoint = true;
         }
 
         public override TaskStatus OnUpdate()
         {
             base.OnUpdate();
 
+            if (!(_spaceShipView.Energy >= _spaceShipView.ShockwaveEnergyCost)) return TaskStatus.Failure;
+
+            _artemisController.UseShockWave = true;
             return TaskStatus.Success;
         }
     }
