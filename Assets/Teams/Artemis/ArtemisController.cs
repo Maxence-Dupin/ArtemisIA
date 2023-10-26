@@ -11,16 +11,19 @@ namespace Artemis {
 	{
 		[SerializeField] private BehaviorTree _behaviorTree;
 		
-		[SerializeField] private SpaceShip _aiSpaceShip;
-		[SerializeField] private SpaceShip _enemySpaceShip;
+		private SpaceShip _aiSpaceShip;
+		private SpaceShipView _enemySpaceShip;
 
 		private Vector2 _closestWaypointPosition;
 
 		private bool _hasMoreEnergy;
 
+		public bool GoingToWaypoint;
+
 		public override void Initialize(SpaceShipView spaceship, GameData data)
 		{
-			_behaviorTree.SetVariableValue("DistanceE", DistanceWithEnemySpaceship());
+			_aiSpaceShip = GameManager.Instance.GetSpaceShipForController(this);
+			_enemySpaceShip = data.GetSpaceShipForOwner(1 - spaceship.Owner);
 		}
 
 		public override InputData UpdateInput(SpaceShipView spaceship, GameData data)
@@ -33,31 +36,25 @@ namespace Artemis {
 			
 			_behaviorTree.SetVariableValue("Mine", CanShotMine());
 			
-			_behaviorTree.SetVariableValue("EnergyJ", _aiSpaceShip.Energy);
-			_behaviorTree.SetVariableValue("EnergyE", _enemySpaceShip.Energy);
-			
-			float thrust;
-			float targetOrient = spaceship.Orientation;
+			_behaviorTree.SetVariableValue("EnergieJ", _aiSpaceShip.Energy);
+			_behaviorTree.SetVariableValue("EnergieE", _enemySpaceShip.Energy);
 
-			if (!_behaviorTree.FindTaskWithName("GoToWaypoint").Disabled)
+			if (GoingToWaypoint)
 			{
-				thrust = 1f;
-				targetOrient = AimingHelpers.ComputeSteeringOrient(_aiSpaceShip.view, _closestWaypointPosition);
-			}
-			else
-			{
-				thrust = 0f;
+				return GoToTarget(_aiSpaceShip.view, _closestWaypointPosition);
 			}
 			
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
+			float targetOrient = spaceship.Orientation;
+			float thrust = 1f;
 			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
 			return new InputData(thrust, targetOrient, needShoot, false, false);
 		}
 
-		public InputData GoToTarget(SpaceShipView spaceShip, GameData gameData, Transform targetPos)
+		public InputData GoToTarget(SpaceShipView spaceShip, Vector2 targetPos)
 		{
 			float thrust = 1.0f;
-			float targetOrient = spaceShip.Orientation + AimingHelpers.ComputeSteeringOrient(spaceShip, new Vector2(targetPos.position.x,targetPos.position.y));
+			float targetOrient = AimingHelpers.ComputeSteeringOrient(spaceShip, targetPos);
 			return new InputData(thrust, targetOrient, false, false, false);
 		}
 

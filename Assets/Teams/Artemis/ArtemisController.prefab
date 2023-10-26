@@ -43,11 +43,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3c4a61f458cbd241a11b0c81e8d1de3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   _behaviorTree: {fileID: -8559834970663188851}
-  _aiSpaceShip: {fileID: 0}
-  _enemySpaceShip: {fileID: 0}
 --- !u!114 &-8559834970663188851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58,8 +56,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Name:
+  m_EditorClassIdentifier:
   startWhenEnabled: 1
   asynchronousLoad: 0
   pauseWhenDisabled: 0
@@ -70,12 +68,12 @@ MonoBehaviour:
   externalBehavior: {fileID: 0}
   mBehaviorSource:
     behaviorName: ArtemisController
-    behaviorDescription: 
+    behaviorDescription:
     mTaskData:
       types: []
-      parentIndex: 
-      startIndex: 
-      variableStartIndex: 
+      parentIndex:
+      startIndex:
+      variableStartIndex:
       JSONSerialization: '{"EntryTask":{"Type":"BehaviorDesigner.Runtime.Tasks.EntryTask","NodeData":{"Offset":"(305.6611,-668.3151)"},"ID":0,"Name":"Entry","Instant":true},"RootTask":{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(3.420103,129.158722)"},"ID":1,"Name":"Sequence","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Repeater","NodeData":{"Offset":"(2.17041016,196.657776)"},"ID":2,"Name":"Repeater","Instant":true,"SharedIntcount":{"Type":"BehaviorDesigner.Runtime.SharedInt","Name":null,"Int32mValue":0},"SharedBoolrepeatForever":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":true},"SharedBoolendOnFailure":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Selector","NodeData":{"Offset":"(2.17163086,151.658142)"},"ID":3,"Name":"Selector","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(-297.8286,226.658691)"},"ID":4,"Name":"Sequence
         Farm","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ConditionalEvaluator","NodeData":{"Offset":"(-432.8291,266.658936)"},"ID":5,"Name":"Ennemi
         loin (distance)","Instant":true,"SharedBoolreevaluate":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"ConditionalconditionalTask":{"Type":"IIM.CompareFloat","SharedFloatvariable":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceE","IsShared":true,"SinglemValue":0},"OPERATORop":"GREATER","SharedFloatcompareTo":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":null,"SinglemValue":0}},"BooleangraphLabel":false,"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ConditionalEvaluator","NodeData":{"Offset":"(-2.82910156,176.658936)"},"ID":6,"Name":"Distance
@@ -91,15 +89,15 @@ MonoBehaviour:
         joueur < E ennemi","Instant":true,"SharedBoolreevaluate":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"ConditionalconditionalTask":{"Type":"IIM.CompareFloat","SharedFloatvariable":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieJ","IsShared":true,"SinglemValue":0},"OPERATORop":"LOWER","SharedFloatcompareTo":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieE","IsShared":true,"SinglemValue":0}},"BooleangraphLabel":false,"Children":[{"Type":"Artemis.FlyAway","NodeData":{"Offset":"(2.64532471,192.911133)"},"ID":18,"Name":"Fly
         Away","Instant":true,"Vector2_target":"(0,0)"}]}]},{"Type":"BehaviorDesigner.Runtime.Tasks.Sequence","NodeData":{"Offset":"(167.172363,241.65918)"},"ID":19,"Name":"Sequence
         d\u00e9fense","Instant":true,"AbortTypeabortType":"None","Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.ConditionalEvaluator","NodeData":{"Offset":"(-2.82763672,196.659424)"},"ID":20,"Name":"E
-        joueur >= E ennemi","Instant":true,"SharedBoolreevaluate":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"ConditionalconditionalTask":{"Type":"IIM.CompareFloat","SharedFloatvariable":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieJ","IsShared":true,"SinglemValue":0},"OPERATORop":"GREATER_OR_EQUAL","SharedFloatcompareTo":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieE","IsShared":true,"SinglemValue":0}},"BooleangraphLabel":false,"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityCharacterController.Move","NodeData":{"Offset":"(-2.82763672,176.659668)"},"ID":21,"Name":"Move","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedVector3motion":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}}]}]}]}]}]}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceE","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceWP","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"Mine","IsShared":true,"BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieJ","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieE","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DirectionE","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceTir","IsShared":true,"SinglemValue":0}]}'
+        joueur >= E ennemi","Instant":true,"SharedBoolreevaluate":{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":null,"BooleanmValue":false},"ConditionalconditionalTask":{"Type":"IIM.CompareFloat","SharedFloatvariable":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieJ","IsShared":true,"SinglemValue":0},"OPERATORop":"GREATER_OR_EQUAL","SharedFloatcompareTo":{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieE","IsShared":true,"SinglemValue":0}},"BooleangraphLabel":false,"Children":[{"Type":"BehaviorDesigner.Runtime.Tasks.Unity.UnityCharacterController.Move","NodeData":{"Offset":"(-2.82763672,176.659668)"},"ID":21,"Name":"Move","Instant":true,"SharedGameObjecttargetGameObject":{"Type":"BehaviorDesigner.Runtime.SharedGameObject","Name":null},"SharedVector3motion":{"Type":"BehaviorDesigner.Runtime.SharedVector3","Name":null,"Vector3mValue":"(0,0,0)"}}]}]}]}]}]}]}]}]},"Variables":[{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceE","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedVector2","Name":"ClosestWP","IsShared":true,"Vector2mValue":"(0,0)"},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DistanceWP","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedBool","Name":"Mine","IsShared":true,"BooleanmValue":false},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieJ","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"EnergieE","IsShared":true,"SinglemValue":0},{"Type":"BehaviorDesigner.Runtime.SharedFloat","Name":"DirectionE","IsShared":true,"SinglemValue":0}]}'
       fieldSerializationData:
         typeName: []
-        fieldNameHash: 
-        startIndex: 
-        dataPosition: 
+        fieldNameHash:
+        startIndex:
+        dataPosition:
         unityObjects: []
-        byteData: 
-        byteDataArray: 
+        byteData:
+        byteDataArray:
       Version: 1.7.7
   gizmoViewMode: 2
   showBehaviorDesignerGizmo: 1

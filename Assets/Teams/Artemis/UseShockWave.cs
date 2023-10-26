@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Artemis
 {
-    public class GoToWaypoint : Action
+    public class UseShockWave : Action
     {
         public ArtemisController _artemisController;
         public Vector2 _target;
@@ -27,12 +27,6 @@ namespace Artemis
         {
             base.OnUpdate();
 
-            if (_spaceShipView.Position != _target)
-            {
-                return TaskStatus.Running;
-            }
-
-            _artemisController.GoingToWaypoint = false;
             return TaskStatus.Success;
         }
     }
