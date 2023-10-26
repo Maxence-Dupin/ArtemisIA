@@ -9,9 +9,8 @@ namespace Artemis
 {
     public class GoToWaypoint : Action
     {
-        public ArtemisController _artemisController;
-        public Vector2 _target;
-
+        private ArtemisController _artemisController;
+        private Vector2 _target;
         private SpaceShipView _spaceShipView;
 
         public override void OnStart()
