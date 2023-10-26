@@ -39,7 +39,7 @@ namespace Artemis {
 			float thrust;
 			float targetOrient = spaceship.Orientation;
 
-			if (!_behaviorTree.FindTaskWithName("GoToPosition").Disabled)
+			if (!_behaviorTree.FindTaskWithName("GoToWaypoint").Disabled)
 			{
 				thrust = 1f;
 				targetOrient = AimingHelpers.ComputeSteeringOrient(_aiSpaceShip.view, _closestWaypointPosition);
@@ -82,7 +82,7 @@ namespace Artemis {
 
 			for (int i = 0; i < gameData.Mines.Count; i++)
 			{
-				if (AimingHelpers.CanHit(_aiSpaceShip.view, gameData.Mines[i].Position, 0.2f))
+				if (AimingHelpers.CanHit(_aiSpaceShip.view, gameData.Mines[i].Position, 0.15f))
 				{
 					return true;
 				}

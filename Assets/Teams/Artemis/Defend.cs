@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Artemis
 {
-    public class GoToPosition : Action
+    public class Defend : Action
     {
         public SpaceShip _spaceship;
         public Vector2 _target;
