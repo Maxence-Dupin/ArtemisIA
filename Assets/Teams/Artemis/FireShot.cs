@@ -9,14 +9,15 @@ namespace Artemis
 {
     public class FireShot : Action
     {
-        public ArtemisController _artemisController;
-        public SpaceShip _spaceship;
+        private ArtemisController _artemisController;
+        private SpaceShipView _spaceship;
 
         public override void OnStart()
         {
             base.OnStart();
             
             _artemisController = GetComponent<ArtemisController>();
+            _spaceship = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
             _artemisController.shootForward = true;
         }
         public override TaskStatus OnUpdate()
@@ -24,6 +25,8 @@ namespace Artemis
             base.OnUpdate();
 
             if (_spaceship.Energy < _spaceship.ShootEnergyCost) return TaskStatus.Failure;
+            
+            _artemisController.shootForward = false;
             
             return TaskStatus.Success;
         }

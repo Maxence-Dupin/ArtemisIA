@@ -45,16 +45,21 @@ namespace Artemis {
 			_behaviorTree.SetVariableValue("EnergieE", _enemySpaceShip.Energy);
 			
 			_behaviorTree.SetVariableValue("DistanceTir", DistanceWithClosestEnemyShot());
-
+			
 			if (GoingToWaypoint)
 			{
-				return GoToTarget(_aiSpaceShip.view, _closestWaypointPosition);
+				//return GoToTarget(_aiSpaceShip.view, _closestWaypointPosition);
+				
+				//fix temporaire
+				float thrustW = 1.0f;
+				float targetOrientW = AimingHelpers.ComputeSteeringOrient(_aiSpaceShip.view, _closestWaypointPosition);
+				InputData dataInput = new InputData(thrustW, targetOrientW, shootForward, false, UseShockWave);
+				shootForward = false;
+				UseShockWave = false;
+				return dataInput;
 			}
-
-			if (shootForward)
-			{
-				return ShootHostile();
-			}
+			
+			
 			
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
 			float targetOrient = spaceship.Orientation;
@@ -62,8 +67,9 @@ namespace Artemis {
 			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
 
 			var inputData = new InputData(thrust, targetOrient, needShoot, false, UseShockWave);
-			
+
 			UseShockWave = false;
+			
 			
 			return inputData;
 		}
