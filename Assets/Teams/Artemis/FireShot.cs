@@ -12,23 +12,44 @@ namespace Artemis
         private ArtemisController _artemisController;
         private SpaceShipView _spaceship;
 
+        private bool _success;
+        private bool _coroutineRunning;
+
         public override void OnStart()
         {
             base.OnStart();
             
             _artemisController = GetComponent<ArtemisController>();
             _spaceship = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
-            _artemisController.shootForward = true;
         }
         public override TaskStatus OnUpdate()
         {
             base.OnUpdate();
 
-            if (_spaceship.Energy < _spaceship.ShootEnergyCost) return TaskStatus.Failure;
+            if (_success)
+            {
+                _success = false;
+                return TaskStatus.Success;
+            }
+
+            if (_spaceship.Energy < _spaceship.ShootEnergyCost && !_coroutineRunning) return TaskStatus.Failure;
+
+            if (_coroutineRunning) return TaskStatus.Running;
             
-            _artemisController.shootForward = false;
+            _artemisController.shootForward = true;
+            StartCoroutine(WaitForSuccess());
+
+            return TaskStatus.Running;
             
-            return TaskStatus.Success;
+            IEnumerator WaitForSuccess()
+            {
+                _coroutineRunning = true;
+                _artemisController.recentShot = true;
+                yield return new WaitForSeconds(0.2f);
+                _coroutineRunning = false;
+                _artemisController.recentShot = false;
+                _success = true;
+            }
         }
     }
 }

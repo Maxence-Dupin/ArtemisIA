@@ -24,9 +24,9 @@ namespace Artemis
         {
             base.OnUpdate();
 
-            if (!(_spaceShipView.Energy >= _spaceShipView.ShockwaveEnergyCost)) return TaskStatus.Failure;
+            if (_spaceShipView.Energy < _spaceShipView.ShockwaveEnergyCost || _artemisController.recentShot) return TaskStatus.Failure;
 
-            _artemisController.UseShockWave = true;
+            _artemisController.useShockWave = true;
             return TaskStatus.Success;
         }
     }

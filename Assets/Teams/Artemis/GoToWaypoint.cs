@@ -19,7 +19,7 @@ namespace Artemis
             
             _artemisController = GetComponent<ArtemisController>();
             _spaceShipView = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
-            _artemisController.GoingToWaypoint = true;
+            _artemisController.goingToWaypoint = true;
         }
 
         public override TaskStatus OnUpdate()
@@ -31,7 +31,7 @@ namespace Artemis
                 return TaskStatus.Running;
             }
 
-            _artemisController.GoingToWaypoint = false;
+            _artemisController.goingToWaypoint = false;
             return TaskStatus.Success;
         }
     }

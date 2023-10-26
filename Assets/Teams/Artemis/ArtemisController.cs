@@ -18,11 +18,10 @@ namespace Artemis {
 
 		private bool _hasMoreEnergy;
 
-		public bool GoingToWaypoint;
-
+		public bool goingToWaypoint;
 		public bool shootForward;
-
-		public bool UseShockWave;
+		public bool recentShot;
+		public bool useShockWave;
 
 
 		public override void Initialize(SpaceShipView spaceship, GameData data)
@@ -46,31 +45,18 @@ namespace Artemis {
 			
 			_behaviorTree.SetVariableValue("DistanceTir", DistanceWithClosestEnemyShot());
 			
-			if (GoingToWaypoint)
+			float thrust = 1f;
+			float targetOrient = spaceship.Orientation;
+			if (goingToWaypoint)
 			{
-				//return GoToTarget(_aiSpaceShip.view, _closestWaypointPosition);
-				
-				//fix temporaire
-				float thrustW = 1.0f;
-				float targetOrientW = AimingHelpers.ComputeSteeringOrient(_aiSpaceShip.view, _closestWaypointPosition);
-				InputData dataInput = new InputData(thrustW, targetOrientW, shootForward, false, UseShockWave);
-				shootForward = false;
-				UseShockWave = false;
-				return dataInput;
+				targetOrient = AimingHelpers.ComputeSteeringOrient(_aiSpaceShip.view, _closestWaypointPosition);
 			}
 			
-			
-			
-			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
-			float targetOrient = spaceship.Orientation;
-			float thrust = 1f;
-			bool needShoot = AimingHelpers.CanHit(spaceship, otherSpaceship.Position, otherSpaceship.Velocity, 0.15f);
+			var inputData = new InputData(thrust, targetOrient, shootForward, false, useShockWave);
 
-			var inputData = new InputData(thrust, targetOrient, needShoot, false, UseShockWave);
+			useShockWave = false;
+			shootForward = false;
 
-			UseShockWave = false;
-			
-			
 			return inputData;
 		}
 
@@ -98,11 +84,13 @@ namespace Artemis {
 
 		public bool CanShotMine()
 		{
+			if (recentShot) return false;
+			
 			var gameData = GameManager.Instance.GetGameData();
 
 			for (int i = 0; i < gameData.Mines.Count; i++)
 			{
-				if (AimingHelpers.CanHit(_aiSpaceShip.view, gameData.Mines[i].Position, 0.15f))
+				if (AimingHelpers.CanHit(_aiSpaceShip.view, gameData.Mines[i].Position, 0.2f))
 				{
 					return true;
 				}
