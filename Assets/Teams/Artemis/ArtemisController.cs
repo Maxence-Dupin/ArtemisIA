@@ -19,6 +19,7 @@ namespace Artemis {
 		private bool _hasMoreEnergy;
 
 		public bool GoingToWaypoint;
+		public bool shootForward;
 
 		public override void Initialize(SpaceShipView spaceship, GameData data)
 		{
@@ -42,6 +43,11 @@ namespace Artemis {
 			if (GoingToWaypoint)
 			{
 				return GoToTarget(_aiSpaceShip.view, _closestWaypointPosition);
+			}
+
+			if (shootForward)
+			{
+				return ShootHostile();
 			}
 			
 			SpaceShipView otherSpaceship = data.GetSpaceShipForOwner(1 - spaceship.Owner);
@@ -84,8 +90,12 @@ namespace Artemis {
 					return true;
 				}
 			}
-
 			return false;
+		}
+
+		public InputData ShootHostile()
+		{
+			return new InputData(_aiSpaceShip.Thrust, _aiSpaceShip.Orientation, true, false, false);
 		}
 
 		public Vector2 GetClosestUnownedWaypointTransform()
