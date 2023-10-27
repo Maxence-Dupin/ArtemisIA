@@ -9,15 +9,32 @@ namespace Artemis
 {
     public class DropMine : Action
     {
-        public SpaceShip _spaceship;
+        
+        
+        private ArtemisController _artemisController;
+        private SpaceShipView _spaceship;
+        private bool _success;
+        private bool _coroutineRunning;
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            
+            _artemisController = GetComponent<ArtemisController>();
+            _spaceship = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
+        }
 
         public override TaskStatus OnUpdate()
         {
             base.OnUpdate();
 
             if (_spaceship.Energy < _spaceship.MineEnergyCost) return TaskStatus.Failure;
-                
-            _spaceship.DropMine();
+
+            if (_artemisController.DistanceWithEnemySpaceship() > 5 &&
+                _artemisController.DistanceWithClosestWaypoint() < 1 && _spaceship.Energy > 0.6)
+            {
+                _artemisController.dropMine = true;
+            }
             return TaskStatus.Success;
         }
     }

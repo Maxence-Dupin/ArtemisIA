@@ -27,6 +27,8 @@ namespace Artemis {
 		public bool useShockWave;
 		public bool recentShockWave;
 
+		public bool dropMine;
+
 		public override void Initialize(SpaceShipView spaceship, GameData data)
 		{
 			_aiSpaceShip = GameManager.Instance.GetSpaceShipForController(this);
@@ -64,12 +66,21 @@ namespace Artemis {
 				useShockWave = false;
 			}
 			
-			var inputData = new InputData(thrust, targetOrient, shootForward, false, useShockWave);
+			/*
+			if (DistanceWithEnemySpaceship() > 5 &&
+			    DistanceWithClosestWaypoint() < 1 && _aiSpaceShip.view.Energy > 0.6)
+			{
+				dropMine = true;
+			}
+			*/
+			
+			var inputData = new InputData(thrust, targetOrient, shootForward, dropMine, useShockWave);
 
 			goingToWaypoint = false;
 			useShockWave = false;
 			shootForward = false;
 			flyingAway = false;
+			dropMine = false;
 
 			return inputData;
 		}
