@@ -19,10 +19,13 @@ namespace Artemis {
 		private bool _hasMoreEnergy;
 
 		public bool goingToWaypoint;
+		public bool flyingAway;
+		
 		public bool shootForward;
 		public bool recentShot;
+		
 		public bool useShockWave;
-
+		public bool recentShockWave;
 
 		public override void Initialize(SpaceShipView spaceship, GameData data)
 		{
@@ -51,11 +54,22 @@ namespace Artemis {
 			{
 				targetOrient = AimingHelpers.ComputeSteeringOrient(_aiSpaceShip.view, _closestWaypointPosition);
 			}
+			else if (flyingAway)
+			{
+				targetOrient = (_enemySpaceShip.Orientation+180)%360;
+			}
+
+			if (recentShockWave)
+			{
+				useShockWave = false;
+			}
 			
 			var inputData = new InputData(thrust, targetOrient, shootForward, false, useShockWave);
 
+			goingToWaypoint = false;
 			useShockWave = false;
 			shootForward = false;
+			flyingAway = false;
 
 			return inputData;
 		}

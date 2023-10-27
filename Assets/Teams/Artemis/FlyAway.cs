@@ -9,18 +9,20 @@ namespace Artemis
 {
     public class FlyAway : Action
     {
-        public SpaceShip _spaceship;
-        public Vector2 _target;
+        private ArtemisController _artemisController;
+
+        public override void OnStart()
+        {
+            base.OnStart();
+            
+            _artemisController = GetComponent<ArtemisController>();
+        }
 
         public override TaskStatus OnUpdate()
         {
             base.OnUpdate();
 
-            while (_spaceship.Position != _target)
-            {
-                return TaskStatus.Running;
-            }
-            
+            _artemisController.flyingAway = true;
             return TaskStatus.Success;
         }
     }

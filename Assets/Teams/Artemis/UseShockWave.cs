@@ -10,24 +10,51 @@ namespace Artemis
     public class UseShockWave : Action
     {
         private ArtemisController _artemisController;
-        private SpaceShipView _spaceShipView;
+        private SpaceShipView _spaceship;
+
+        private bool _success;
+        private bool _coroutineRunning;
 
         public override void OnStart()
         {
             base.OnStart();
             
             _artemisController = GetComponent<ArtemisController>();
-            _spaceShipView = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
+            _spaceship = GameManager.Instance.GetSpaceShipForController(_artemisController).view;
         }
-
         public override TaskStatus OnUpdate()
         {
             base.OnUpdate();
 
-            if (_spaceShipView.Energy < _spaceShipView.ShockwaveEnergyCost || _artemisController.recentShot) return TaskStatus.Failure;
+            if (_success)
+            {
+                _success = false;
+                return TaskStatus.Success;
+            }
 
+            if (_spaceship.Energy < _spaceship.ShockwaveEnergyCost && !_coroutineRunning) return TaskStatus.Failure;
+
+            if (_coroutineRunning) return TaskStatus.Running;
+            
             _artemisController.useShockWave = true;
-            return TaskStatus.Success;
+            StartCoroutine(WaitForSuccess());
+
+            return TaskStatus.Running;
+            
+            IEnumerator WaitForSuccess()
+            {
+                _coroutineRunning = true;
+                
+                yield return new WaitForSeconds(Time.deltaTime);
+                
+                _artemisController.recentShockWave = true;
+                
+                yield return new WaitForSeconds(0.1f);
+                
+                _coroutineRunning = false;
+                _artemisController.recentShockWave = false;
+                _success = true;
+            }
         }
     }
 }
